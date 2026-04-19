@@ -6,5 +6,11 @@ RUN apt update && \
 RUN mkdir /var/run/sshd
 
 RUN useradd -m user && echo "user:1234" | chpasswd
+# יצירת תיקיית ה-ssh מראש וקביעת הרשאות
+RUN mkdir -p /home/user/.ssh && \
+    chown user:user /home/user/.ssh && \
+    chmod 700 /home/user/.ssh
+
+# הערה: הקובץ authorized_keys יוזרק דרך ה-Compose לווליום
 
 CMD ["/usr/sbin/sshd", "-D"]
